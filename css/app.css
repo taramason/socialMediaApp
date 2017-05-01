@@ -1,0 +1,43 @@
+/*font-family: 'League Script', cursive;
+font-family: 'Muli', sans-serif;*/
+
+.media-object {
+  max-width: 200px;
+}
+
+[ng-click] {
+  cursor: pointer;
+}
+
+.search-form {
+  margin-top: 4px;
+}
+
+main.container {
+  margin-bottom: 4em;
+}
+
+.voteTitle {
+  margin-left: 5% !important;
+  margin-left: 2rem !important;
+
+}
+.sortBy {
+  display: inline-block;
+  padding-left: 10px !important;
+}
+.no-border {
+    border: 0 !important;
+    box-shadow: none;
+}
+/*html {
+  background: url("../images/background.jpg") no-repeat center center fixed;
+  background-size:cover;
+  position: absolute;
+}*/
+body {
+  font-family: 'Muli', sans-serif;
+}
+.tNavbar {
+  font-family: 'League Script', cursive;
+}

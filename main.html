@@ -1,0 +1,147 @@
+
+<!--
+<div class="jumbotron" ng-model = "$ctrl.time">
+  <p>The time is {{ $ctrl.time }}</p>
+  <span am-time-ago="$ctrl.post.time"></span>
+</div> -->
+<!-- <time am-time-ago="$ctrl.time"> {{ $ctrl.time | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}</time> -->
+<!-- <p><time>{{ $ctrl.time | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}</time> -->
+
+
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand tNavbar">Share your Favorite Things .... </a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    </div>
+  </div>
+</nav>
+
+<main class="container">
+
+  <div class="pull-right">
+    <p><a ng-click="formOpen = !formOpen" class="btn btn-info">Post Something!</a></p>
+  </div>
+
+  <ul class="nav nav-pills">
+    <li role="presentation" class="active">
+      <input ng-model="searchText" type="search" class="form-control input-sm search-form" placeholder="Filter"> <!-- at some point plug searchText in -->
+    </li>
+    <div class="sortBy form-inline">
+      <select class="no-border voteTitle form-control" id="sort" ng-model="sortBy">
+        <option value="date">Sort by date</option>
+        <option value="text">Sort by title</option>
+        <option value="count">Sort by votes</option>
+
+      </select>
+    </div>
+  </ul>
+
+
+<!-- NEW POST INPUT -->
+  <div  class="row" ng-show="formOpen" id="newPostForm">
+    <div class="col-md-8">
+<!-- ng-repeat= "post in $ctrl.posts" -->
+      <form ng-submit="$ctrl.addPost()" ng-disabled="submit-comment.$invalid">
+        <div>
+          <label for="title">Title</label>
+          <input ng-model="$ctrl.post.text" type="text" name="title" id="title" class="form-control" required>
+        </div>
+        <div>
+          <label for="body">Body</label>
+          <textarea ng-model="$ctrl.post.body" type="text" id="body" class="form-control" required></textarea>
+        </div>
+        <div>
+          <label for="author">Author</label>
+          <input ng-model="$ctrl.post.author" type="text" id="author" class="form-control" required>
+        </div>
+        <div>
+          <label for="image-url">Image URL</label>
+          <input ng-model="$ctrl.post.imgurl" type="text" id="image-url" class="form-control" required>
+
+          <!-- <div ng-model="$ctrl.post.time" type="text"  ></div> -->
+
+        </div>
+        <div class="form-group">
+          <button name="submit-comment" type="submit" class="btn btn-primary">
+            Create Post
+          </button>
+        </div>
+      </form>
+
+      {{$ctrl.post | json}}
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+
+<!-- NEW COMMENT BOX -->
+      <div ng-repeat= "post in $ctrl.posts | orderBy : sortBy track by $index" class="well">
+        <!-- | orderBy : sortBy  -->
+        <div class="media-left">
+          <img class="media-object" ng-src = {{post.imgurl}} />
+
+        </div>
+        <div class="media-body">
+          <h4 class="postTitle media-heading">
+            {{post.text}}
+            |
+            <a  ng-click="post.count=post.count+1" ng-init="$ctrl.post.count = 0" href=""><i class="glyphicon glyphicon-arrow-up"></i></a>
+            <a  ng-click="post.count=post.count-1"><i class="glyphicon glyphicon-arrow-down"></i></a>
+            {{post.count}}
+          </h4>
+        
+
+          <div class="text-right">
+            {{post.author}}
+          </div>
+
+            {{post.body}}
+
+            <!-- class="dropdon" ng-show="actualComments" -->
+            <span> {{post.time | date:'medium'}}</span>
+            <div ng-click="actualcomments = !actualcomments">
+            |
+<!---COMMENTS-->
+            <i class="glyphicon glyphicon-comment"></i>
+            <a ui-sref="comments">
+              Comments
+            </a>
+<!-- END COMMENT DROPDOWN -->
+          </div>
+          <div ng-show="actualcomments" class="row">
+            <div  class="col-md-offset-1">
+              <hr>
+              <p ng-repeat="comment in post.comments">
+                {{comment.body}}
+              </p>
+
+              <form ng-submit="$ctrl.addComment(post)" class="form-inline">
+                <div class="form-group">
+                  <input ng-model="$ctrl.comment.body" name="comment" class="form-control">
+                </div>
+                <div class="form-group">
+                  <input type="submit" class="btn btn-primary">
+                </div>
+              </form>
+
+            </div>
+          </div>
+<!-- END COMMENTS -->
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
